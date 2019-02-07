@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+
+<body>
+  <div class="container">
+    <br>
+    <!-- Jumbotron -->
+    <div class="jumbotron row">
+      <h1 class="col l9">Rock Paper Scissors</h1>
+      <div>
+        <button hidden id="sign-out" class="btn btn-default">
+          Sign-out
+        </button>
+      </div>
+      <div>
+        <button id="sign-in" class="btn btn-default">
+          <i class="material-icons">account_circle</i>Sign-in with Google
+        </button>
+      </div>
+<!-- 
+      Alternative login with a field to enter user name
+      <form role="form col l3">
+        <input class="form-control" id="name-input" type="text">
+        <button class="btn btn-default" id="add-user" type="submit">Start</button>
+      </form> -->
+
+
+    </div>
+
+    <section class="row">
+      <div class="col-lg-4 player-1">
+      <button id="p1-rock" value="rock-1">
+        <img class="button-image" src="assets/images/rock.png" alt="A fist">
+      </button>
+      <button id="p1-paper" value="paper-1">
+        <img class="button-image" src="assets/images/paper.png" alt="An open hand">
+      </button>
+      <button id="p1-scissors" value="scissors-1">
+        <img class="button-image" src="assets/images/scissors.png" alt="Two fingers">
+      </button>
+    </div>
+    <div class="col-lg-2 outcome"></div>
+    <div class="col-lg-4 player-2">
+      <button id="p2-rock" value="rock-2">
+        <img class="button-image" src="assets/images/rock.png" alt="A fist">
+      </button>
+      <button id="p2-paper" value="paper-2">
+        <img class="button-image" src="assets/images/paper.png" alt="An open hand">
+      </button>
+      <button id="p2-scissors" value="scissors-2">
+        <img class="button-image" src="assets/images/scissors.png" alt="Two fingers">
+      </button>
+    </div>
+  </section>
+  <div class="row">
+<!-- Messages container -->
+<div id="message-window">
+  <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+    <div id="messages">
+      <span id="message-filler"></span>
+    </div>
+    <form id="message-form" action="#">
+      <div>
+        <input class="textfield__input" type="text" id="message">
+        <label class="textfield__label" for="message">Message...</label>
+      </div>
+      <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+          Send
+      </button>
+    </form>
+  </div>
+  </div>
+  </div>
+
+  <div class="row">
+    <p id="directions-text">Press r, p or s to start playing!</p>
+    </div>
+      <p id="userchoice-text"></p>
+      <p id="computerchoice-text"></p>
+      <p id="wins-text"></p>
+      <p id="losses-text"></p>
+      <p id="ties-text"></p>
+    </div>
+  </div>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   
+  <script type="text/javascript" src="assets/js/main.js"></script>
+
+
+</body>
+
+</html>
