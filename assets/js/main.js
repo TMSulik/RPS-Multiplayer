@@ -9,14 +9,54 @@
   };
   firebase.initializeApp(config);
 
-
 // Create a variable to reference the database.
 var database = firebase.database();
 
+var CHOICES = {
+  p1: "rock",
+  p2: "rock"
+}
+
+var playerOne = "Laurel";
+var playerTwo = "Hardy";
+
 $('button').click(function(){
+  
   var fired_button = $(this).val();
-  $('.outcome').text(fired_button + " was clicked");
+  var button_owner = $(this).parent().attr("class");
+  if(button_owner === "player-1") {
+    button_owner = playerOne;
+  } else {
+    button_owner = playerTwo;
+  }
+  $('.outcome').text(button_owner + " clicked " + fired_button);
+
 });
+
+// TODO: When a pair of player's login, assign one to player1, the other to player2
+// Something like:
+// If no one is signed in, the first person to sign in is player1.
+// If one user is signed in, that person is player2
+// var user = [person signed in on this device]
+// function disableOpponentsButtons() {
+//   if(user === player1) {
+//     // I think this will disable buttons in that div class
+//     // If not, disable buttons individually by their id
+//     $('.player-1').prop('disabled', false);
+//     $('.player-2').prop('disabled', true);
+//   } else {
+//     $('.player-2').prop('disabled', false);
+//     $('.player-1').prop('disabled', true);
+//   }
+// }
+
+
+
+$( document ).ready(function() {
+  $("#p1").text(playerOne);
+  $("#p2").text(playerTwo);
+});
+
 
 
 
