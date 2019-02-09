@@ -69,8 +69,9 @@ $.fn.multiline = function(text){
 function announceOutcomes() {
   if(choice1 === choice2) {
     $('.outcome').multiline(playerOne + "'s " + choice1 + " matches " + playerTwo + "'s " + choice2 + ". \n It's a tie!");
+    // Prevent players from changing results
+    $('button').attr("disabled", true);
     countdownToNewRound();
-    return;
   }
   if(choice1 === "rock") {
     if(choice2 === "scissors") {
@@ -96,10 +97,13 @@ function announceOutcomes() {
       $('.outcome').multiline(playerTwo + "'s " + choice2 + " crushes " + playerOne + "'s " + choice1 + ". \n" + playerTwo + " wins!");
     }
   }
+  // Prevent players from changing results
+  $('button').attr("disabled", true);
   countdownToNewRound();
 }
 
 function resetGame() {
+  $('button').attr("disabled", false);
   choice1 = "Waiting for " + playerOne;
   choice2 = "Waiting for " + playerTwo;
   outcome = "Make your choice!";
