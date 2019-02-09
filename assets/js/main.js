@@ -19,19 +19,115 @@ var CHOICES = {
 
 var playerOne = "Laurel";
 var playerTwo = "Hardy";
+var choice1 = "Waiting for " + playerOne;
+var choice2 = "Waiting for " + playerTwo;
+var outcome = "Make your choice!";
+$('.outcome').text(outcome);
 
 $('button').click(function(){
-  
   var fired_button = $(this).val();
   var button_owner = $(this).parent().attr("class");
   if(button_owner === "player-1") {
-    button_owner = playerOne;
-  } else {
-    button_owner = playerTwo;
-  }
-  $('.outcome').text(button_owner + " clicked " + fired_button);
+    choice1 = fired_button;
+    if(choice2 === ("Waiting for " + playerTwo)) {
+      $('.outcome').text(choice2);
+    } else {
+      announceOutcomes();
+    }
+  } 
+  if(button_owner === "player-2") {
+    choice2 = fired_button;
+    if(choice1 === ("Waiting for " + playerOne)) {
+      $('.outcome').text(choice1);
+    } else {
+      announceOutcomes();
+    }
+  } 
+  
+  
+  
+  
+  // else {
+  //   // button_owner = playerTwo;
+  //   choice1 = fired_button;
+  //   if(choice1 === ("Wait for " + playerTwo)) {
+  //     $('.outcome').text(choice1);
+  //   } else {
+  //     announceOutcomes();
+  //   }
+  // }
+  // $('.outcome').text(button_owner + " clicked " + fired_button);
 
 });
+// Insert a linebreak in the element's text.
+$.fn.multiline = function(text){
+  this.text(text);
+  this.html(this.html().replace(/\n/g,'<br/>'));
+  return this;
+}
+
+function announceOutcomes() {
+  if(choice1 === choice2) {
+    $('.outcome').multiline(playerOne + "'s " + choice1 + " matches " + playerTwo + "'s " + choice2 + ". \n It's a tie!");
+    countdownToNewRound();
+    return;
+  }
+  if(choice1 === "rock") {
+    if(choice2 === "scissors") {
+      $('.outcome').multiline(playerOne + "'s " + choice1 + " crushes " + playerTwo + "'s " + choice2 + ". \n" + playerOne + " wins!");
+    }
+    if(choice2 === "paper") {
+      $('.outcome').multiline(playerTwo + "'s " + choice2 + " covers " + playerOne + "'s " + choice1 + ". \n" + playerTwo + " wins!");
+    }
+  }
+  if(choice1 === "paper") {
+    if(choice2 === "rock") {
+      $('.outcome').multiline(playerOne + "'s " + choice1 + " covers " + playerTwo + "'s " + choice2 + ". \n" + playerOne + " wins!");
+    }
+    if(choice2 === "scissors") {
+      $('.outcome').multiline(playerTwo + "'s " + choice2 + " cut " + playerOne + "'s " + choice1 + ". \n" + playerTwo + " wins!");
+    }
+  }
+  if(choice1 === "scissors") {
+    if(choice2 === "paper") {
+      $('.outcome').multiline(playerOne + "'s " + choice1 + " cut " + playerTwo + "'s " + choice2 + ". \n" + playerOne + " wins!");
+    }
+    if(choice2 === "rock") {
+      $('.outcome').multiline(playerTwo + "'s " + choice2 + " crushes " + playerOne + "'s " + choice1 + ". \n" + playerTwo + " wins!");
+    }
+  }
+  countdownToNewRound();
+}
+
+function resetGame() {
+  choice1 = "Waiting for " + playerOne;
+  choice2 = "Waiting for " + playerTwo;
+  outcome = "Make your choice!";
+  $('.outcome').text(outcome);
+}
+
+function countdownToNewRound() {
+  var counter = 3;
+  var interval = setInterval(function() {
+    counter--;
+    if (counter == 0) {
+      resetGame();
+    }
+  }, 1000);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // TODO: When a pair of player's login, assign one to player1, the other to player2
 // Something like:
