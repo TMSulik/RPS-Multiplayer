@@ -8,28 +8,55 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+  
+  <!-- Add firebase functions -->
+
+
 
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Bangers"/>
 </head>
 
 <body>
   <div class="container">
     <br>
     <!-- Jumbotron -->
-    <div class="jumbotron row">
-      <h1 class="header col-lg-9">Rock Paper Scissors</h1>
+    <div class="jumbotron row clearfix">
+      <h1 class="header col-lg-5">Rock, Paper, Scissors</h1>
+      <h1 class="header col-lg-3">じゃん拳</h1>
       <div>
         <button hidden id="sign-out" class="btn btn-default">
           Sign-out
         </button>
       </div>
-      <div>
-        <button id="sign-in" class="btn btn-default">
+      <div class="col-lg-4 sign-in">
+      <form id="signIn1">Player One
+        <input id="player-one-name" type="text" name="name" placeholder="Enter your name">
+        <input id="p1Button" type="submit" value="SUBMIT">
+      </form>
+      <button id="logout1" class="btn btn-default"></button>
+
+      <!-- <form action="javascript:handleClick()">Player Two -->
+      <form id="signIn2">Player Two
+        <input id="player-two-name" type="text" name="name" placeholder="Enter your name">
+        <input id="p2Button" type="submit" value="SUBMIT">
+      </form>
+      <button id="logout2" class="btn btn-default"></button>
+    </div>
+
+      <!-- <form role="form">
+        <div class="col-lg-12 sign-in">
+          <input class="form-control" id="name-input" type="text" value="Enter name">
+          <button class="btn btn-default" id="add-user" type="submit">Submit</button>
+        </div>
+      </form> -->
+    <!-- </div> -->
+      <!-- <div>
+        <button hidden id="sign-in" class="btn btn-default">
           <i class="material-icons">account_circle</i>Sign-in with Google
         </button>
-      </div>
+      </div> -->
 <!-- 
       Alternative login with a field to enter user name
       <form role="form col l3">
@@ -40,7 +67,7 @@
 
     <section class="row">
       <div class="col-lg-4">
-        <h2 id="p1"></h2>
+        <h3 id="p1"></h3>
         <div class="player-1">
         <button id="p1-rock" value="rock">
           <img class="button-image" src="assets/images/rock.png" alt="A fist">
@@ -57,7 +84,7 @@
         <div class="outcome"></div>
       </div>
       <div class="col-lg-4">
-        <h2 id="p2"></h2>
+        <h3 id="p2"></h3>
         <div class="player-2">
         <button id="p2-rock" value="rock">
           <img class="button-image" src="assets/images/rock.png" alt="A fist">
@@ -86,39 +113,8 @@
   </div>
 </div>
 
+</div>
 
-
-
-
-
-<!-- <div id="message-window">
-  <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-    <div id="messages">
-      <span id="message-filler"></span>
-    </div>
-    <form id="message-form" action="#">
-      <div>
-        <input class="textfield__input" type="text" id="message">
-        <label class="textfield__label" for="message">Message...</label>
-      </div>
-      <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-          Send
-      </button>
-    </form>-->
-  <!-- </div> 
-  </div> -->
-  </div>
-
-  <div class="row">
-    <p id="directions-text">Press r, p or s to start playing!</p>
-    </div>
-      <p id="userchoice-text"></p>
-      <p id="computerchoice-text"></p>
-      <p id="wins-text"></p>
-      <p id="losses-text"></p>
-      <p id="ties-text"></p>
-    </div>
-  </div>
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
   <script type="text/javascript" src="assets/js/main.js"></script>

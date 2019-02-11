@@ -1,28 +1,131 @@
+var config = {
+  apiKey: "AIzaSyAGTeTITOTPaojdePzri_n_ZH1KHMfLz0k",
+  authDomain: "rps-multiplayer-6a299.firebaseapp.com",
+  databaseURL: "https://rps-multiplayer-6a299.firebaseio.com",
+  projectId: "rps-multiplayer-6a299",
+  storageBucket: "",
+  messagingSenderId: "71764649933"
+};
 
-  var config = {
-    apiKey: "AIzaSyAGTeTITOTPaojdePzri_n_ZH1KHMfLz0k",
-    authDomain: "rps-multiplayer-6a299.firebaseapp.com",
-    databaseURL: "https://rps-multiplayer-6a299.firebaseio.com",
-    projectId: "rps-multiplayer-6a299",
-    storageBucket: "",
-    messagingSenderId: "71764649933"
-  };
-  firebase.initializeApp(config);
+firebase.initializeApp(config);
 
 // Create a variable to reference the database.
 var database = firebase.database();
 
-var CHOICES = {
-  p1: "rock",
-  p2: "rock"
-}
-
-var playerOne = "Laurel";
-var playerTwo = "Hardy";
+var playerOne = "Player One";
+var playerTwo = "Player Two";
 var choice1 = "Waiting for " + playerOne;
 var choice2 = "Waiting for " + playerTwo;
 var outcome = "Make your choice!";
 $('.outcome').text(outcome);
+
+$("#p1Button").on("click", function(event) {
+  if($("#player-one-name").val() === "") {
+    alert("Type your name in the field");
+    return;
+  }
+  playerOne = $("#player-one-name").val().trim();
+  $("#p1").text(playerOne);
+  $('#player-one-name').val('');
+  $("#logout1").text(playerOne + " sign-out");
+  disableSignin('#signIn1', '#logout1');
+  updateDatabase();
+});
+
+$("#p2Button").on("click", function(event) {
+  event.preventDefault();
+  if($("#player-two-name").val() === "") {
+    alert("Type your name in the field");
+    return;
+  }
+  playerTwo = $("#player-two-name").val().trim();
+  database.ref().set({
+    playerOne: playerOne,
+    playerTwo: playerTwo
+  });
+  $("#p2").text(playerTwo);
+  $("#player-two-name").val('');
+  $("#logout2").text(playerTwo + " sign-out");
+  disableSignin('#signIn2', '#logout2');
+  updateDatabase();
+});
+
+function disableSignin(player, logout) {
+  $(player).hide();
+  $(logout).show();
+}
+
+$("#logout1").on("click", function(event) {
+  $('.outcome').text(playerOne + " has left the game");
+  playerOne = "Player One";
+  $("#p1").text(playerOne);
+  $("#signIn1").show();
+  $("#logout1").hide();
+  updateDatabase();
+  countdownToNewRound();
+});
+
+$("#logout2").on("click", function(event) {
+  $('.outcome').text(playerTwo + " has left the game");
+  playerTwo = "Player Two";
+  $("#p2").text(playerTwo);
+  $("#signIn2").show();
+  $("#logout2").hide();
+  updateDatabase();
+  countdownToNewRound();
+});
+
+function updateDatabase() {
+  event.preventDefault();
+  database.ref().set({
+    playerOne: playerOne,
+    playerTwo: playerTwo
+  });
+}
+
+var user = firebase.auth().signInAnonymously();
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+
+    var isAnonymous = user.isAnonymous;
+    console.log(isAnonymous + " is signed in");
+    user_id = user.uid;
+  } else {
+    // User is signed out.
+    console.log("User is signed out");
+  }
+});
+
+// At the initial load and subsequent value changes, get a snapshot of the stored data.
+// This function allows you to update your page in real-time when the firebase database changes.
+database.ref().on("value", function(snapshot) {
+  console.log("Snapshot: " + snapshot);
+  if(true) {
+  console.log("Snapshot: " + snapshot);
+
+  // If Firebase has a highPrice and highBidder stored (first case)
+  // if (snapshot.child("highBidder").exists() && snapshot.child("highPrice").exists()) {
+
+    // Set the variables for highBidder/highPrice equal to the stored values in firebase.
+    // highPrice = ...
+    // highBidder = ...
+
+
+    // Change the HTML to reflect the stored values
+
+
+    // Print the data to the console.
+
+  } else {
+    // Change the HTML to reflect the initial values
+    // Print the data to the console
+  }
+
+// If any errors are experienced, log them to console.
+}, function(errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
 
 $('button').click(function(){
   var fired_button = $(this).val();
@@ -43,21 +146,6 @@ $('button').click(function(){
       announceOutcomes();
     }
   } 
-  
-  
-  
-  
-  // else {
-  //   // button_owner = playerTwo;
-  //   choice1 = fired_button;
-  //   if(choice1 === ("Wait for " + playerTwo)) {
-  //     $('.outcome').text(choice1);
-  //   } else {
-  //     announceOutcomes();
-  //   }
-  // }
-  // $('.outcome').text(button_owner + " clicked " + fired_button);
-
 });
 // Insert a linebreak in the element's text.
 $.fn.multiline = function(text){
@@ -120,94 +208,16 @@ function countdownToNewRound() {
   }, 1000);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// TODO: When a pair of player's login, assign one to player1, the other to player2
-// Something like:
-// If no one is signed in, the first person to sign in is player1.
-// If one user is signed in, that person is player2
-// var user = [person signed in on this device]
-// function disableOpponentsButtons() {
-//   if(user === player1) {
-//     // I think this will disable buttons in that div class
-//     // If not, disable buttons individually by their id
-//     $('.player-1').prop('disabled', false);
-//     $('.player-2').prop('disabled', true);
-//   } else {
-//     $('.player-2').prop('disabled', false);
-//     $('.player-1').prop('disabled', true);
-//   }
-// }
-
-
-
 $( document ).ready(function() {
   $("#p1").text(playerOne);
   $("#p2").text(playerTwo);
+  $("#logout1").hide();
+  $("#logout2").hide();
+  $("#signIn1").show();
+  $("#signIn2").show();
+
+  database.ref().set({
+    playerOne: "Player One",
+    playerTwo: "Player Two"
+  });
 });
-
-
-
-
-// Creates an array that lists out all of the options (Rock, Paper, or Scissors).
-var computerChoices = ["r", "p", "s"];
-
-// Creating variables to hold the number of wins, losses, and ties. They start at 0.
-var wins = 0;
-var losses = 0;
-var ties = 0;
-
-// Create variables that hold references to the places in the HTML where we want to display things.
-var directionsText = document.getElementById("directions-text");
-var userChoiceText = document.getElementById("userchoice-text");
-var computerChoiceText = document.getElementById("computerchoice-text");
-var winsText = document.getElementById("wins-text");
-var lossesText = document.getElementById("losses-text");
-var tiesText = document.getElementById("ties-text");
-
-// This function is run whenever the user presses a key.
-document.onkeyup = function(event) {
-
-// Determines which key was pressed.
-var userGuess = event.key;
-
-// Randomly chooses a choice from the options array. This is the Computer's guess.
-var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-
-// Reworked our code from last step to use "else if" instead of lots of if statements.
-
-// This logic determines the outcome of the game (win/loss/tie), and increments the appropriate number
-if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
-
-  if ((userGuess === "r" && computerGuess === "s") ||
-      (userGuess === "s" && computerGuess === "p") || 
-      (userGuess === "p" && computerGuess === "r")) {
-        wins++;
-      } else if (userGuess === computerGuess) {
-        ties++;
-      } else {
-        losses++;
-      }
-      
-  // Hide the directions
-  directionsText.textContent = "";
-
-  // Display the user and computer guesses, and wins/losses/ties.
-  userChoiceText.textContent = "You chose: " + userGuess;
-  computerChoiceText.textContent = "The computer chose: " + computerGuess;
-  winsText.textContent = "wins: " + wins;
-  lossesText.textContent = "losses: " + losses;
-  tiesText.textContent = "ties: " + ties;
-  }
-};
